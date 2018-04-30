@@ -18,7 +18,7 @@
 
 ## For Windows PowerShell
 1. Provision machine with this script, skip to step 3, or Get GitHub for Windows: [GitHub for Windows](https://desktop.github.com/)
-2. Clone Repo: [win-provision](git@github.com:rickrussell/win-provision.git)
+2. Clone Repo: [win-provision](https://github.com/rickrussell/win-provision.git)
 3. Create Branch (using poshgit in powershell)
    ```
    E:\projects\win-provision [master ≡]> git checkout -b add-feature-01-rrr -t origin/master
