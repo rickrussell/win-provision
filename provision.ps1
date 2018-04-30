@@ -1,8 +1,12 @@
 # Description: Boxstarter Script
 # Author: Rick Russell <rickr@noneck.net>
 # Last Updated: 2018-04-30
-#
+
 # This script uses BoxStarter. Learn more: http://boxstarter.org/Learn/WebLauncher
+# Run this boxstarter by calling the following from an **elevated** command-prompt:
+# 	start http://boxstarter.org/package/nr/url?https://raw.githubusercontent.com/rickrussell/win-provision/master/provision.ps1
+# OR
+# Install-BoxstarterPackage -PackageName https://raw.githubusercontent.com/rickrussell/win-provision/master/provision.ps1 -DisableReboots
 
 # From an Administrator PowerShell, if Get-ExecutionPolicy returns Restricted, run:
 if ((Get-ExecutionPolicy) -eq "Restricted") {
@@ -16,9 +20,9 @@ if (!(Test-Path $_boxstarter_path)) {
 }
 
 # Then run: Boxstarter Shell as an Administrator
-# $cwd = "$(Get-Location)"
-# . $_boxstarter_path
-# cd "$cwd"
+$cwd = "$(Get-Location)"
+. $_boxstarter_path
+cd "$cwd"
 
 # Enable users on other computers to run commands on this machine temporarily
 # this is Disabled at bottom of script.
@@ -109,7 +113,7 @@ Set-TaskbarOptions -Size Large -Dock Bottom -Combine Full -AlwaysShowIconsOn
 
 # Package installation using Chocolatey
 
-# Virtuals only:
+# Hyper-V VM's only:
 # cup -y Microsoft-Hyper-V-All -source windowsFeatures
 
 cup -y chocolatey
@@ -118,6 +122,12 @@ cup -y powershell
 refreshenv
 
 Write-BoxstarterMessage "*** Installing Microsoft Applications and Tools ***"
+
+# TODO: Finish Adding Office Enterprise install section using Deployment Tool
+# Office365 Deployment Tool
+# https://docs.microsoft.com/en-us/DeployOffice/overview-of-the-office-2016-deployment-tool
+# https://chocolatey.org/packages/office365-2016-deployment-tool
+
 # Microsoft Apps
 #cup -y office365proplus
 #cup -y microsoft-teams
@@ -151,13 +161,15 @@ refreshenv
 
 #--- Tools ---
 #
-# Write-BoxstarterMessage "*** Installing Development Tools ***"
-# #GIT
-# cup -y git -params '"/GitAndUnixToolsOnPath /WindowsTerminal"' -y
-# cup -y poshgit
-# cup -y github
-# cup -y git-credential-manager-for-windows
-#
+Write-BoxstarterMessage "*** Installing Development Tools ***"
+
+Write-BoxstarterMessage "**** Installing Git Tools ****"
+#GIT
+cup -y git -params '"/GitAndUnixToolsOnPath /WindowsTerminal"' -y
+cup -y poshgit
+cup -y github.install
+cup -y git-credential-manager-for-windows
+
 # refreshenv
 #
 # cup -y atom
