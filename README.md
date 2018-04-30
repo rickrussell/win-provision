@@ -4,7 +4,7 @@
 ##  To run locally:
 **Open with your favorite editor and make sure to add or comment out the packages you do or do not want. See Developer section(s) below if needed.**
 1. Run this boxstarter script by calling the following from an **elevated** command-prompt:
-   #### Start > Run
+   #### Start > Run > cmd
    ```powershell
    start http://boxstarter.org/package/nr/url?https://raw.githubusercontent.com/rickrussell/win-provision/master/provision.ps1
    ```
