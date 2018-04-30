@@ -56,7 +56,7 @@ Set-service -Name PeerDistSvc -StartupType Disabled
 Set-service -Name TrkWks -StartupType Disabled
 # i don't use iscsi
 Set-service -Name MSISCSI -StartupType Disabled
-# why is SNMPTRAP still on windows 10? i mean, really, who uses SNMP? is it even a real protocol anymore?
+# I still use snmp in some instances.  In the case of workstations, not so much. -RRR
 Set-service -Name SNMPTRAP -StartupType Disabled
 # Peer to Peer discovery svcs...Begone!
 Set-service -Name PNRPAutoReg -StartupType Disabled
