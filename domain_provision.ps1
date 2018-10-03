@@ -1,9 +1,15 @@
-##########
-# Win10 / WinServer2016 Initial Setup Script
-# Author: Disassembler <disassembler@dasm.cz>
-# Version: v2.14, 2018-04-06
-# Source: https://github.com/Disassembler0/Win10-Initial-Setup-Script
-##########
+# vi:syntax=ps1
+# file=domain_provision.ps1
+# Description: Windows 10 Provisioning using Powershell.  Choose and uncommment
+# the choices you want.  The tasks below are fairly self explanatory.
+# Author: Rick Russell <rrussell@lmud.org>
+
+# Use for domain joined PC's only.
+# Make sure to at least go through "### Security Tweaks ###" section below
+# Run Boxstarter Shell as an Administrator
+
+# Enable Debug output
+#Set-PSDebug -Trace 1
 
 # Default preset
 $tweaks = @(
@@ -13,11 +19,12 @@ $tweaks = @(
 	### Privacy Tweaks ###
 	"DisableTelemetry",             # "EnableTelemetry",
 	"DisableWiFiSense",             # "EnableWiFiSense",
-	# "DisableSmartScreen",         # "EnableSmartScreen",
+	"EnableSmartScreen",          # "DisableSmartScreen",
 	"DisableWebSearch",             # "EnableWebSearch",
 	"DisableAppSuggestions",        # "EnableAppSuggestions",
 	"DisableBackgroundApps",        # "EnableBackgroundApps",
-	"DisableLockScreenSpotlight",   # "EnableLockScreenSpotlight",
+	"DisableSpotlight",             # "EnableSpotlight",
+	#"DisableLockScreenSpotlight",   # "EnableLockScreenSpotlight",
 	"DisableLocationTracking",      # "EnableLocationTracking",
 	"DisableMapUpdates",            # "EnableMapUpdates",
 	"DisableFeedback",              # "EnableFeedback",
@@ -32,9 +39,9 @@ $tweaks = @(
 	### Security Tweaks ###
 	# "SetUACLow",                  # "SetUACHigh",
 	# "EnableSharingMappedDrives",  # "DisableSharingMappedDrives",
-	#"DisableAdminShares",           # "EnableAdminShares",
-	# "DisableSMB1",                # "EnableSMB1",
-	#"SetCurrentNetworkPrivate",     # "SetCurrentNetworkPublic",
+	#"DisableAdminShares",          # "EnableAdminShares",
+	"DisableSMB1",                  # "EnableSMB1",
+	#"SetCurrentNetworkPrivate",    # "SetCurrentNetworkPublic",
 	# "SetUnknownNetworksPrivate",  # "SetUnknownNetworksPublic",
 	# "DisableNetDevicesAutoInst",  # "EnableNetDevicesAutoInst",
 	# "EnableCtrldFolderAccess",    # "DisableCtrldFolderAccess",
@@ -45,14 +52,14 @@ $tweaks = @(
 	"SetDEPOptOut",                 # "SetDEPOptIn",
 	"DisableScriptHost",            # "EnableScriptHost",
 	"EnableDotNetStrongCrypto",     # "DisableDotNetStrongCrypto",
-	# "EnableMeltdownCompatFlag"    # "DisableMeltdownCompatFlag",
+	"EnableMeltdownCompatFlag"      # "DisableMeltdownCompatFlag",
 
 	### Service Tweaks ###
-	# "DisableUpdateMSRT",          # "EnableUpdateMSRT",
-	# "DisableUpdateDriver",        # "EnableUpdateDriver",
+	"EnableUpdateMSRT",             # "DisableUpdateMSRT",
+	"EnableUpdateDriver",           # "DisableUpdateDriver",
 	"DisableUpdateRestart",         # "EnableUpdateRestart",
-	"DisableHomeGroups",            # "EnableHomeGroups",
-	"DisableSharedExperiences",     # "EnableSharedExperiences",
+	"DisableHomeGroups",           # "EnableHomeGroups",
+	"DisableSharedExperiences",    # "EnableSharedExperiences",
 	"DisableRemoteAssistance",      # "EnableRemoteAssistance",
 	"EnableRemoteDesktop",          # "DisableRemoteDesktop",
 	"DisableAutoplay",              # "EnableAutoplay",
@@ -65,16 +72,16 @@ $tweaks = @(
 	# "EnableHibernation",          # "DisableHibernation",
 	# "DisableSleepButton",         # "EnableSleepButton",
 	# "DisableSleepTimeout",        # "EnableSleepTimeout",
-	# "DisableFastStartup",         # "EnableFastStartup",
+	"EnableFastStartup",          # "DisableFastStartup",
 
 	### UI Tweaks ###
 	"DisableActionCenter",          # "EnableActionCenter",
 	# "DisableLockScreen",            # "EnableLockScreen",
 	# "DisableLockScreenRS1",       # "EnableLockScreenRS1",
-	"HideNetworkFromLockScreen",    # "ShowNetworkOnLockScreen",
-	"HideShutdownFromLockScreen",   # "ShowShutdownOnLockScreen",
+	"ShowNetworkFromLockScreen",    # "HideNetworkOnLockScreen",
+	"ShowShutdownFromLockScreen",   # "ShowShutdownOnLockScreen",
 	"DisableStickyKeys",            # "EnableStickyKeys",
-	"ShowTaskManagerDetails"        # "HideTaskManagerDetails",
+	"ShowTaskManagerDetails",       # "HideTaskManagerDetails",
 	"ShowFileOperationsDetails",    # "HideFileOperationsDetails",
 	# "EnableFileDeleteConfirm",    # "DisableFileDeleteConfirm",
 	"HideTaskbarSearchBox",         # "ShowTaskbarSearchBox",
@@ -85,28 +92,28 @@ $tweaks = @(
 	"ShowTrayIcons",                # "HideTrayIcons",
 	"DisableSearchAppInStore",      # "EnableSearchAppInStore",
 	"DisableNewAppPrompt",          # "EnableNewAppPrompt",
-	# "SetControlPanelViewIcons",   # "SetControlPanelViewCategories",
+	"SetControlPanelViewIcons",   # "SetControlPanelViewCategories",
 	"SetVisualFXPerformance",       # "SetVisualFXAppearance",
-	# "AddENKeyboard",              # "RemoveENKeyboard",
-	"EnableNumlock",              # "DisableNumlock",
+	"AddENKeyboard",              # "RemoveENKeyboard",
+	#"EnableNumlock",              # "DisableNumlock",
 
 	### Explorer UI Tweaks ###
 	"ShowKnownExtensions",          # "HideKnownExtensions",
 	"ShowHiddenFiles",              # "HideHiddenFiles",
 	"HideSyncNotifications"         # "ShowSyncNotifications",
-	"HideRecentShortcuts",          # "ShowRecentShortcuts",
+	"ShowRecentShortcuts",          # "HideRecentShortcuts",
 	"SetExplorerThisPC",            # "SetExplorerQuickAccess",
 	"ShowThisPCOnDesktop",          # "HideThisPCFromDesktop",
 	# "ShowUserFolderOnDesktop",    # "HideUserFolderFromDesktop",
-	"HideDesktopFromThisPC",        # "ShowDesktopInThisPC",
-	# "HideDesktopFromExplorer",    # "ShowDesktopInExplorer",
-	"HideDocumentsFromThisPC",      # "ShowDocumentsInThisPC",
-	# "HideDocumentsFromExplorer",  # "ShowDocumentsInExplorer",
-	"HideDownloadsFromThisPC",      # "ShowDownloadsInThisPC",
-	# "HideDownloadsFromExplorer",  # "ShowDownloadsInExplorer",
+	"ShowDesktopFromThisPC",        # "HideDesktopInThisPC",
+	"ShowDesktopFromExplorer",      # "HideDesktopInExplorer",
+	"ShowDocumentsFromThisPC",      # "HideDocumentsInThisPC",
+	"ShowDocumentsFromExplorer",    # "HideDocumentsInExplorer",
+	"ShowDownloadsFromThisPC",      # "HideDownloadsInThisPC",
+	"ShowDownloadsFromExplorer",    # "HideDownloadsInExplorer",
 	"HideMusicFromThisPC",          # "ShowMusicInThisPC",
 	# "HideMusicFromExplorer",      # "ShowMusicInExplorer",
-	"HidePicturesFromThisPC",       # "ShowPicturesInThisPC",
+	"ShowPicturesFromThisPC",       # "HidePicturesInThisPC",
 	# "HidePicturesFromExplorer",   # "ShowPicturesInExplorer",
 	"HideVideosFromThisPC",         # "ShowVideosInThisPC",
 	# "HideVideosFromExplorer",     # "ShowVideosInExplorer",
@@ -120,7 +127,7 @@ $tweaks = @(
 	"UninstallOneDrive",            # "InstallOneDrive",
 	"UninstallMsftBloat",           # "InstallMsftBloat",
 	"UninstallThirdPartyBloat",     # "InstallThirdPartyBloat",
-	# "UninstallWindowsStore",      # "InstallWindowsStore",
+	"UninstallWindowsStore",      # "InstallWindowsStore",
 	"DisableXboxFeatures",          # "EnableXboxFeatures",
 	#"DisableAdobeFlash",            # "EnableAdobeFlash",
 	# "UninstallMediaPlayer",       # "InstallMediaPlayer",
@@ -134,7 +141,7 @@ $tweaks = @(
 	# "UninstallPDFPrinter",        # "InstallPDFPrinter",
 	"UninstallXPSPrinter",          # "InstallXPSPrinter",
 	## Remove Comma if last line -RRR
-	"RemoveFaxPrinter"              # "AddFaxPrinter",
+	"RemoveFaxPrinter",             # "AddFaxPrinter",
 
 	### Server Specific Tweaks ###
 	# "HideServerManagerOnLogin",   # "ShowServerManagerOnLogin",
@@ -145,11 +152,11 @@ $tweaks = @(
 	# "EnableAudio",                # "DisableAudio",
 
 	### Unpinning ###
-	# "UnpinStartMenuTiles",
-	# "UnpinTaskbarIcons",
+	"UnpinStartMenuTiles",
+	"UnpinTaskbarIcons"
 
 	### Auxiliary Functions ###
-	## I disabled this and made them seperate steps -RRR
+	## I disabled these as the provisioner takes care of these -RRR
 	#"WaitForKey",
 	#"Restart"
 )
@@ -329,6 +336,22 @@ Function EnableLockScreenSpotlight {
 	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "RotatingLockScreenEnabled" -Type DWord -Value 1
 	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "RotatingLockScreenOverlayEnabled" -Type DWord -Value 1
 	Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338387Enabled" -ErrorAction SilentlyContinue
+}
+
+# Disable Spotlight features altogether
+Function DisableSpotlight {
+	Write-Output "Disabling Lock screen spotlight..."
+  Set-ItemProperty -Path "Software\Policies\Microsoft\Windows\CloudContent" -Name "DisableWindowsSpotlightFeatures" -Type DWord -Value 0
+  Set-ItemProperty -Path "Software\Policies\Microsoft\Windows\CloudContent" -Name "DisableWindowsSpotlightOnActionCenter" -Type DWord -Value 0
+  Set-ItemProperty -Path "Software\Policies\Microsoft\Windows\CloudContent" -Name "DisableWindowsSpotlightOnSettings" -Type DWord -Value 0
+}
+
+# Enable Spotlight features
+Function EnableSpotlight {
+	Write-Output "Disabling Lock screen spotlight..."
+  Set-ItemProperty -Path "Software\Policies\Microsoft\Windows\CloudContent" -Name "DisableWindowsSpotlightFeatures" -Type DWord -Value 1
+  Set-ItemProperty -Path "Software\Policies\Microsoft\Windows\CloudContent" -Name "DisableWindowsSpotlightOnActionCenter" -Type DWord -Value 1
+  Set-ItemProperty -Path "Software\Policies\Microsoft\Windows\CloudContent" -Name "DisableWindowsSpotlightOnSettings" -Type DWord -Value 1
 }
 
 # Disable Location Tracking
@@ -1125,7 +1148,7 @@ Function ShowTaskManagerDetails {
 			Start-Sleep -m 250
 			$preferences = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\TaskManager" -Name "Preferences" -ErrorAction SilentlyContinue
 		}
-		Stop-Process $taskmgr
+		Stop-Process -Force $taskmgr -ErrorAction SilentlyContinue
 	}
 	$preferences.Preferences[28] = 0
 	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\TaskManager" -Name "Preferences" -Type Binary -Value $preferences.Preferences
@@ -1739,7 +1762,7 @@ Function EnableOneDrive {
 # Uninstall OneDrive - Not applicable to Server
 Function UninstallOneDrive {
 	Write-Output "Uninstalling OneDrive..."
-	Stop-Process -Name OneDrive -ErrorAction SilentlyContinue
+	Stop-Process -Force -Name OneDrive -ErrorAction SilentlyContinue
 	Start-Sleep -s 3
 	$onedrive = "$env:SYSTEMROOT\SysWOW64\OneDriveSetup.exe"
 	If (!(Test-Path $onedrive)) {
@@ -1747,7 +1770,7 @@ Function UninstallOneDrive {
 	}
 	Start-Process $onedrive "/uninstall" -NoNewWindow -Wait
 	Start-Sleep -s 3
-	Stop-Process -Name explorer -ErrorAction SilentlyContinue
+	Stop-Process -Force -Name explorer -ErrorAction SilentlyContinue
 	Start-Sleep -s 3
 	Remove-Item -Path "$env:USERPROFILE\OneDrive" -Force -Recurse -ErrorAction SilentlyContinue
 	Remove-Item -Path "$env:LOCALAPPDATA\Microsoft\OneDrive" -Force -Recurse -ErrorAction SilentlyContinue
@@ -1865,6 +1888,8 @@ function UninstallThirdPartyBloat {
 	Write-Output "Uninstalling default third party applications..."
 	Get-AppxPackage "9E2F88E3.Twitter" | Remove-AppxPackage
 	Get-AppxPackage "king.com.CandyCrushSodaSaga" | Remove-AppxPackage
+	Get-AppxPackage "king.com.CandyCrushSodaSaga" | Remove-AppxPackage
+	Get-AppxPackage "king.com.CandyCrushSodaSaga" | Remove-AppxPackage
 	Get-AppxPackage "4DF9E0F8.Netflix" | Remove-AppxPackage
 	Get-AppxPackage "Drawboard.DrawboardPDF" | Remove-AppxPackage
 	Get-AppxPackage "D52A8D61.FarmVille2CountryEscape" | Remove-AppxPackage
@@ -1889,6 +1914,9 @@ function UninstallThirdPartyBloat {
 	Get-AppxPackage "64885BlueEdge.OneCalendar" | Remove-AppxPackage
 	Get-AppxPackage "41038Axilesoft.ACGMediaPlayer" | Remove-AppxPackage
 	Get-AppxPackage "DolbyLaboratories.DolbyAccess" | Remove-AppxPackage
+	Get-AppxPackage "Flipboard.Flipboard" | Remove-AppxPackage
+	Get-AppxPackage "ShazamEntertainmentLtd.Shazam" | Remove-AppxPackage
+	Get-AppxPackage "Flipboard.Flipboard" | Remove-AppxPackage
 }
 
 # Install default third party applications
@@ -2286,20 +2314,17 @@ Function RequireAdmin {
 	}
 }
 
-# Disabled this and brought them out into seperate steps. -RRR
 # # Wait for key press
-# Function WaitForKey {
-# 	Write-Output "`nPress any key to continue..."
-# 	[Console]::ReadKey($true) | Out-Null
-# }
+Function WaitForKey {
+	Write-Output "`nPress any key to continue..."
+	[Console]::ReadKey($true) | Out-Null
+}
 #
-# # Restart computer
-# Function Restart {
-# 	Write-Output "Restarting..."
-# 	Restart-Computer
-# }
-
-
+# Restart computer
+Function Restart {
+	Write-Output "Restarting Machine after domain provisioning..."
+	Restart-Computer
+}
 
 ##########
 # Parse parameters and apply tweaks
@@ -2323,3 +2348,5 @@ If ($args) {
 
 # Call the desired tweak functions
 $tweaks | ForEach { Invoke-Expression $_ }
+
+exit 0
