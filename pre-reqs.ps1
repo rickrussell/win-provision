@@ -1,7 +1,7 @@
 # vi:syntax=ps1
 # file=pre-reqs.ps1
 # Description: Windows 10 Initial Provisioning script using Boxstarter
-# Author: Rick Russell <rrussell@lmud.org>
+# Author: Rick Russell <sysadmin.rick@gmail.com>
 
 # Needs to be run as a pre-req prior to provisioning any machine @ LMUD
 

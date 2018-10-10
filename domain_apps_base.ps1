@@ -2,7 +2,7 @@
 # file=domain_apps_base.ps1
 # Description: Base Applications for all domain joined Workstations. Use for
 # domain joined PC's NOT for home or private use.
-# Author: Rick Russell <rrussell@lmud.org>
+# Author: Rick Russell <sysadmin.rick@gmail.com>
 
 # Enable Debug output
 # Set-PSDebug -Trace 1

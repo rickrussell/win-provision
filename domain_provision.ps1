@@ -2,7 +2,7 @@
 # file=domain_provision.ps1
 # Description: Windows 10 Provisioning using Powershell.  Choose and uncommment
 # the choices you want.  The tasks below are fairly self explanatory.
-# Author: Rick Russell <rrussell@lmud.org>
+# Author: Rick Russell <sysadmin.rick@gmail.com>
 
 # Use for domain joined PC's only.
 # Make sure to at least go through "### Security Tweaks ###" section below

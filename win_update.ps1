@@ -1,7 +1,7 @@
 # vi:syntax=ps1
 # file=win_update.ps1
 # Description: Windows 10 Provisioning using Boxstarter
-# Author: Rick Russell <rrussell@lmud.org>
+# Author: Rick Russell <sysadmin.rick@gmail.com>
 
 # From an Administrator PowerShell, if Get-ExecutionPolicy returns Restricted,
 # Set policy to unrestricted:
