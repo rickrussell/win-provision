@@ -1,7 +1,8 @@
 # vi:syntax=ps1
 # file=lock-down.ps1
 # Description: Windows 10 Provisioning using Boxstarter
-# Author: Rick Russell <rrussell@lmud.org>
+
+# Author: Rick Russell <sysadmin.rick@gmail.com>
 
 # Needs to be run as a pre-req prior to provisioning
 
