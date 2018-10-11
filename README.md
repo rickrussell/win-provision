@@ -2,15 +2,16 @@
 ### Windows Provision Scripts - Windows 7,10 &amp; Server 2012 R2, 2016
  ##  To run locally:
 **Open with your favorite editor and make sure to add or comment out the packages you do or do not want. See Developer section(s) below if needed.**
-1. Run this boxstarter script by calling the following from an **elevated** command-prompt:
-   #### Start > Run > cmd
-   ```powershell
-   start http://boxstarter.org/package/nr/url?https://raw.githubusercontent.com/rickrussell/win-provision/master/provision.ps1
-   ```
-2.
- 2) Open Powershell as Administrator
+1. Open Powershell as Administrator
  ```powershell
-& \\path\to\files\provision\windows\provision.ps1
+& \\path\to\files\win-provision\pre-reqs.ps1
+& \\path\to\files\win-provision\domain_services.ps1
+& \\path\to\files\win-provision\domain_provision.ps1
+& \\path\to\files\win-provision\domain_apps_base.ps1
+```
+If you'd like additional development packages..
+```
+& \\path\to\files\win-provision\domain_apps_devops.ps1
 ```
  ## For Windows PowerShell
 1. Provision machine with this script, skip to step 3, or Get GitHub for Windows: [GitHub for Windows](https://desktop.github.com/)
